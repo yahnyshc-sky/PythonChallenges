@@ -6,8 +6,10 @@ import os
 
 # Initialize Pygame
 pygame.init()
+pygame.mixer.init()
 WIDTH, HEIGHT = 600, 600
 GAME_WIDTH, GAME_HEIGHT = 300, 300
+OFFSET_X, OFFSET_Y = 150, 150
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Snake Game')
 clock = pygame.time.Clock()
@@ -28,6 +30,15 @@ BLUE = (0, 0, 255)
 SNAKE_SIZE = 10
 SNAKE_SPEED = 15
 FONT = pygame.font.SysFont('arial', 25)
+
+# # Sound Effects
+# eat_sound_path = os.path.join(os.path.dirname(__file__), 'sounds', 'eat.wav')
+# eat_sound = pygame.mixer.Sound(eat_sound_path)
+# bg_sound_path = os.path.join(os.path.dirname(__file__), 'sounds', 'bg_music.wav')
+# bg_sound = pygame.mixer.Sound(bg_sound_path)
+
+# pygame.mixer.music.load(bg_sound_path)
+# pygame.mixer.music.play(-1)
 
 def draw_snake(snake_body):
     for segment in snake_body:
@@ -70,8 +81,8 @@ def game_over(score):
 def main():
     snake_position = [300, 300]
     snake_body = [[300, 300], [290, 300], [280, 300]]
-    food_position = [(random.randrange(1, (GAME_WIDTH // SNAKE_SIZE)) * SNAKE_SIZE)+150,
-                     (random.randrange(1, (GAME_HEIGHT // SNAKE_SIZE)) * SNAKE_SIZE)+150]
+    food_position = [(random.randrange(1, (GAME_WIDTH // SNAKE_SIZE)) * SNAKE_SIZE)+OFFSET_X,
+                     (random.randrange(1, (GAME_HEIGHT // SNAKE_SIZE)) * SNAKE_SIZE)+OFFSET_Y]
     food_spawn = True
     direction = 'RIGHT'
     change_to = direction
@@ -107,25 +118,26 @@ def main():
         if snake_position == food_position:
             score += 1
             food_spawn = False
+            # eat_sound.play()
         else:
             snake_body.pop()
 
         if not food_spawn:
-            food_position = [(random.randrange(1, (GAME_WIDTH // SNAKE_SIZE)) * SNAKE_SIZE)+150,
-                             (random.randrange(1, (GAME_HEIGHT // SNAKE_SIZE)) * SNAKE_SIZE)+150]
+            food_position = [(random.randrange(1, (GAME_WIDTH // SNAKE_SIZE)) * SNAKE_SIZE)+OFFSET_X,
+                             (random.randrange(1, (GAME_HEIGHT // SNAKE_SIZE)) * SNAKE_SIZE)+OFFSET_Y]
         food_spawn = True
 
         screen.fill(WHITE)
-        screen.blit(bg_image, (150, 150))
+        screen.blit(bg_image, (OFFSET_X, OFFSET_Y))
 
         border_radius=5
-        pygame.draw.rect(screen, BLACK, pygame.Rect(150, 150, GAME_WIDTH, GAME_HEIGHT), border_radius)
+        pygame.draw.rect(screen, BLACK, pygame.Rect(OFFSET_X-5, OFFSET_Y-5, GAME_WIDTH+10, GAME_HEIGHT+10), border_radius)
         draw_snake(snake_body)
         draw_food(food_position)
         show_score(score)
 
-        if (snake_position[0] < 0 or snake_position[0] >= GAME_WIDTH+150 or snake_position[0] < GAME_WIDTH-150 or
-                snake_position[1] < 0 or snake_position[1] >= GAME_HEIGHT+150 or snake_position[1] < GAME_HEIGHT-150):
+        if (snake_position[0] < 0 or snake_position[0] >= GAME_WIDTH+OFFSET_X or snake_position[0] < GAME_WIDTH-OFFSET_X or
+                snake_position[1] < 0 or snake_position[1] >= GAME_HEIGHT+OFFSET_Y or snake_position[1] < GAME_HEIGHT-OFFSET_Y):
             game_over(score)
 
         for block in snake_body[1:]:
