@@ -53,6 +53,9 @@ class Human:
     def set_belongings(self, belongings: list) -> None:
         self.belongings = belongings
 
+    def human_status(self) -> str:
+        return "Alive" if self.is_alive else "Deceased"
+
     def kill_human(self) -> None:
         self.is_alive = False
-        print(f"{self.name[0]} {self.name[1]} has been killed.")
+        return f"{self.name[0]} {self.name[1]} aka. the \U0001F410 has been killed."
