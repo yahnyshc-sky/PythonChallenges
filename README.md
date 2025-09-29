@@ -39,12 +39,4 @@ This repository contains two classic Python games: **Snake Game** and **Rock Pap
     python rock_paper_scissors.py
     ```
 
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
 Enjoy playing!
