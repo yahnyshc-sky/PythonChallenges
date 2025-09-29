@@ -1,17 +1,43 @@
 class Human:
-    def __init__(self, first_name, last_name, belongings, age, height, weight, coding_languages, is_alive = True): #Default parameter is_alive = True
+    def __init__(self, 
+                 first_name: str = "Ranya", 
+                 last_name: str = "Panya", 
+                 favorite_drinks: list = ["Milk"], 
+                 age: int = 0, 
+                 height: int = 50, 
+                 bank_balance: float = 0.0, 
+                 coding_languages: set = None, 
+                 is_alive: bool = True):
+        
         self.name = (first_name, last_name)
         self.is_alive = is_alive
-        self.belongings = belongings
+        self.favorite_drinks = favorite_drinks
         self.measurements = {
             'age': age,
             'height': height,
-            'weight': weight,
+            'balance': bank_balance,
         }
         self.coding_languages = coding_languages
 
-    # Getters
+    def __str__(self) -> str:
+        name = f"{self.name[0]} {self.name[1]}"
+        age = self.measurements.get('age', 'N/A')
+        height = self.measurements.get('height', 'N/A')
+        balance = self.measurements.get('balance', 'N/A')
+        drinks = ', '.join(self.favorite_drinks) if self.favorite_drinks else 'water'
+        languages = ', '.join(sorted(self.coding_languages)) if self.coding_languages else 'None'
+        status = "🟢 Alive" if self.is_alive else "Deceased\U0001F940"
+        return (
+            f"🌟 Meet {name}!\n"
+            f"🎂 Age: {age} years\n"
+            f"📏 Height: {height} cm\n"
+            f"💰 Bank Balance: ${balance}\n"
+            f"☕ Favorite Drinks: {drinks}\n"
+            f"💻 Coding Languages: {languages}\n"
+            f"🧬 Status: {status}"
+        )
 
+    # Getters
     def get_name(self) -> tuple:
         return self.name
 
@@ -34,7 +60,6 @@ class Human:
         return self.is_alive
     
     # Setters 
-    
     def set_name(self, first_name: str, last_name: str) -> None:
         self.name = (first_name, last_name)
     
@@ -54,8 +79,10 @@ class Human:
         self.belongings = belongings
 
     def human_status(self) -> str:
-        return "Alive" if self.is_alive else "Deceased"
+        return "Alive" if self.is_alive else "Deceased\U0001F940"
 
     def kill_human(self) -> None:
         self.is_alive = False
-        return f"{self.name[0]} {self.name[1]} aka. the \U0001F410 has been killed."
+
+    def revive_human(self) -> None:
+        self.is_alive = True
