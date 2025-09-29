@@ -1,5 +1,3 @@
-#game of rock paper scissors conforming to clean code, make into web app, flask.
-
 from flask import Flask, request, jsonify
 import random
 
