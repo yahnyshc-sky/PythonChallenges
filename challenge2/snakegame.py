@@ -2,6 +2,7 @@
 import pygame
 import random
 import sys
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -10,6 +11,11 @@ GAME_WIDTH, GAME_HEIGHT = 300, 300
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Snake Game')
 clock = pygame.time.Clock()
+
+# Background Image
+bg_image_path = os.path.join(os.path.dirname(__file__), 'images', 'canon.webp')
+bg_image = pygame.image.load(bg_image_path)
+bg_image = pygame.transform.scale(bg_image, (GAME_WIDTH, GAME_HEIGHT))
 
 # Colours 
 WHITE = (255, 255, 255)
@@ -29,7 +35,7 @@ def draw_snake(snake_body):
         pygame.draw.rect(screen, BLACK, pygame.Rect(segment[0], segment[1], SNAKE_SIZE, SNAKE_SIZE), 1)
 
 def draw_food(food_position):
-    pygame.draw.rect(screen, RED, pygame.Rect(food_position[0], food_position[1], SNAKE_SIZE, SNAKE_SIZE))
+    pygame.draw.rect(screen, BLUE, pygame.Rect(food_position[0], food_position[1], SNAKE_SIZE, SNAKE_SIZE))
 
 def show_score(score):
     score_surface = FONT.render(f'Score: {score}', True, BLACK)
@@ -38,12 +44,16 @@ def show_score(score):
 def game_over(score): 
     while True:
         screen.fill(WHITE)
-        game_over_surface = FONT.render(f'Game Over! Your Score: {score}', True, BLACK)
-        screen.blit(game_over_surface, (WIDTH // 6, HEIGHT // 3))
+        # screen.blit(bg_image, (GAME_WIDTH, GAME_HEIGHT))
+        game_over_surface = FONT.render('Game Over!', True, BLACK)
+        screen.blit(game_over_surface, ((WIDTH - game_over_surface.get_width()) // 2, HEIGHT // 3))
         
+        score_surface = FONT.render(f'Final Score: {score}', True, BLACK)
+        screen.blit(score_surface, ((WIDTH - score_surface.get_width()) // 2, HEIGHT // 2))
+
         retry_surface = FONT.render('Press R to Retry or Q to Quit', True, BLACK)
-        screen.blit(retry_surface, (WIDTH // 6, HEIGHT // 2))
-        
+        screen.blit(retry_surface, ((WIDTH - retry_surface.get_width()) // 2, HEIGHT // 1.5))
+
         pygame.display.flip()
         
         for event in pygame.event.get():
@@ -106,6 +116,7 @@ def main():
         food_spawn = True
 
         screen.fill(WHITE)
+        screen.blit(bg_image, (150, 150))
 
         border_radius=5
         pygame.draw.rect(screen, BLACK, pygame.Rect(150, 150, GAME_WIDTH, GAME_HEIGHT), border_radius)
