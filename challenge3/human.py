@@ -28,11 +28,3 @@ class Human:
     def get_belongings(self):
         return self.belongings
 
-Human = Human("Panya", "Ranya", True, ['matcha'], 65, 376,
-              4000.1, {'Python', 'Java', 'C#', 'React', 'Assembly', 'C', 'C++',
-                                 'Rust', 'JavaScript', 'CSS', 'HTML', 'AWS', 'Lua', 'Haskell', 'LOLCODE',
-                                 'reMorse', 'TrumpScript' } )
-
-print(Human.get_name()[0])
-print(Human.get_age())
-
