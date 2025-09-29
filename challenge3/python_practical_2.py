@@ -12,4 +12,8 @@ good_languages = [
     'LOLCODE',
     'TrumpScript'
 ]
-print([l for l in good_languages if l in panya.get_coding_languages()])
+#print([l for l in good_languages if l in panya.get_coding_languages()])
+
+print(panya.is_human_alive())
+panya.kill_human()
+print(panya.is_human_alive())
