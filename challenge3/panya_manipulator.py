@@ -1,7 +1,5 @@
 from human import Human
-
-def panya_development(baby: Human, grown: Human) -> None:
-    print (f"{baby}\n\nGrew up to become the \U0001F410\n\n{grown}")
+from panya_representer import PanyaRepresenter
 
 baby = Human()
 panya = Human(
@@ -19,4 +17,5 @@ panya = Human(
 
 panya.kill_human()
 
-panya_development(baby, panya)
+panya_representer = PanyaRepresenter(baby, panya)
+print(panya_representer)
